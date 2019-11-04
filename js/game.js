@@ -53,10 +53,15 @@ class Game {
 
     this.obstacles.generateIcebergs();
     this.obstacles.updateIcebergs();
-    console.log(this.obstacles.icebergArr[0]);
-    if (this.isCollison(this.ship.position, this.obstacles.icebergArr[0])) {
-      this.gameOver();
+    // console.log(this.obstacles.icebergArr[0]);
+    
+    for (let obstacle of this.obstacles.icebergArr) {
+      // console.log(obstacle);
+      if (this.isCollison(this.ship.position, obstacle)) {
+        this.gameOver();
+      }
     }
+
   }
 
   // compares the properties of two objects

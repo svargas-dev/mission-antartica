@@ -12,11 +12,15 @@ class Obstacles {
   }
 
   generateIcebergs() {
-    if (this.icebergArr.length < this.game.level) {
-      let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width;
+    if (this.icebergArr.length === 0) {
+      let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
       let newIceberg = `{"x" :${randomX}, "y" : 0, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}}`;
       this.icebergArr.push(JSON.parse(newIceberg));
-      // console.dir(this.icebergArr);
+    } else if (this.icebergArr.length < this.game.level) {
+      let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
+      let randomY = Math.floor(Math.random() * this.game.HEIGHT/6) - this.icebergImg.height;
+      let newIceberg = `{"x" :${randomX}, "y" : ${randomY}, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}}`;
+      this.icebergArr.push(JSON.parse(newIceberg));
     }
   }
 
