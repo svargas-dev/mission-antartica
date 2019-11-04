@@ -13,7 +13,8 @@ class Game {
     this.controls = new Controls(this);
     this.controls.setControls();
     this.obstacles = new Obstacles(this);
-    this.level = 2;
+    this.level = 1;
+    this.score = 0;
   }
 
   startScr() {
@@ -40,28 +41,10 @@ class Game {
   updateEverything(timestamp) {
     // this.sea.update();
     // this.ship.update();
-    // console.log(`Is collision: ${this.isCollison(this.ship.position, this.obstacles.icebergArr[0])}`);
-
-    // console.log('Ship pos, x:' + this.ship.position.x + ' y: ' + this.ship.position.y);
-    // console.log('Obstacle pos, x: ' + this.obstacles.icebergArr[0].x + ' y: ' + this.obstacles.icebergArr[0].y);
-    // console.log(typeof this.obstacles.icebergArr[0].x);
-
-    // console.log(this.ship.position);
-    // console.log(
-    //   this.isCollison(this.ship.position, this.obstacles.icebergArr[0])
-    // );
 
     this.obstacles.generateIcebergs();
     this.obstacles.updateIcebergs();
-    // console.log(this.obstacles.icebergArr[0]);
     
-    for (let obstacle of this.obstacles.icebergArr) {
-      // console.log(obstacle);
-      if (this.isCollison(this.ship.position, obstacle)) {
-        this.gameOver();
-      }
-    }
-
   }
 
   // compares the properties of two objects
@@ -69,6 +52,7 @@ class Game {
     return object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y;
   }
 
+  
   animation(timestamp) {
     //   console.log(timestamp)
     this.drawEverything();
@@ -76,8 +60,16 @@ class Game {
 
     // requestAnimationFrame will generate a timestamp that we will use it as a reference
     //  for doing other things, and call the animation() again
-    window.requestAnimationFrame(timestamp => this.animation(timestamp));
+    const animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
+    for (let obstacle of this.obstacles.icebergArr) {
+      // console.log(obstacle);
+      if (this.isCollison(this.ship.position, obstacle)) {
+        this.gameOver();
+        window.cancelAnimationFrame(animationRef);
+      }
+    }
   }
+
 
   gameOver() {
     const ctx = this.ctx;
