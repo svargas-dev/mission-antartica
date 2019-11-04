@@ -1,0 +1,49 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+img {
+  position: absolute;
+}
+
+.fade-in {
+  animation: fadein 5s;
+  /* background: blue; */
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* When class is triggered, image and button fade out */
+.fade-out {
+  animation: fadeOut 2s;
+  /* background: blue; */
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+#start-btn {
+  position: absolute;
+  top: 60%;
+  height: 3em;
+  width: auto;
+  font-size: 2em;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+  color: red;
+  border: 0.2em solid red;
+  background-color: black;
+  border-radius: 0.2em;
+  padding: 1em 2em 2em 2em;
+}
