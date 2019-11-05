@@ -10,7 +10,7 @@ class Obstacles {
   generateObstacles() {
     if (this.obstaclesArr.length <= this.game.level) {
       let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
-      let randomY = Math.floor(Math.random() * this.game.HEIGHT/8) - this.icebergImg.height;
+      let randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this.icebergImg.height);
       let newIceberg = `{"x" :${randomX}, "y" : ${randomY}, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}, "type": "iceberg"}`;
       this.obstaclesArr.push(JSON.parse(newIceberg));
     }

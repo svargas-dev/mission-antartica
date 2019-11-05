@@ -34,6 +34,10 @@ class Game {
   startGame() {
     // call everything
     this.animation();
+    this.sound = new Sound();
+    // this.sound.playWind();
+    this.sound.playSoundsAll();
+    this.sound.playIceberg();
   }
 
 
