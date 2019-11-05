@@ -7,7 +7,7 @@ class Obstacles {
     this.obstaclesArr = [];
   }
 
-  generateIcebergs() {
+  generateObstacles() {
     if (this.obstaclesArr.length <= this.game.level) {
       let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
       let randomY = Math.floor(Math.random() * this.game.HEIGHT/8) - this.icebergImg.height;
@@ -16,7 +16,7 @@ class Obstacles {
     }
   }
 
-  updateIcebergs() {
+  updateObstacles() {
     for (let iceberg of this.obstaclesArr) {
       iceberg.y += this.game.ship.velocity;
     }

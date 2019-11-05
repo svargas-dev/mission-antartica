@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
 });
 
 function startFade() {
-  let elementsToFade = document.querySelectorAll('.fade');
+  const elementsToFade = document.querySelectorAll('.fade');
   for (let elementToFade = 0; elementToFade < elementsToFade.length; elementToFade++) {
     elementsToFade[elementToFade].classList = 'fade-out';
   }
@@ -22,4 +22,17 @@ function startFade() {
       // console.dir(elementsToFade[elementToFade]);
     }
   }, 2000);
+}
+
+function gameOver() {
+  $canvas.classList = 'fade-out';
+  
+  const $button = document.querySelector('button');
+  $button.innerText = 'PLAY AGAIN';
+  $button.classList = 'fade-in';
+  $button.hidden = 'false';
+
+  const $gameOver = document.getElementById('game-over');
+  $gameOver.style.display = 'block'
+  $gameOver.classList = 'fade-in';
 }

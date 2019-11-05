@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Pixel Power';
+    src: url('PixelPower.woff2') format('woff2'),
+        url('PixelPower.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+

@@ -1,3 +1,12 @@
+/* To be implemented with DOM scoreboard... Later iteration
+@font-face {
+  font-family: 'Pixel Power';
+  src: url('font/PixelPower.woff2') format('woff2'),
+      url('font/PixelPower.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+} */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -46,4 +55,20 @@ img {
   background-color: black;
   border-radius: 0.2em;
   padding: 1em 2em 2em 2em;
+}
+
+#game-over {
+  position: absolute;
+  /* visibility: hidden; */
+  display: none;
+}
+
+.game-over {
+  animation: fadeIn 2s;
+  /* background: blue; */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

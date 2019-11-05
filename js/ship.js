@@ -1,7 +1,6 @@
 class Ship {
   constructor(game) {
     this.game = game;
-    // this.position = [this.game.WIDTH/2, 340];
     this.shipImg = new Image();
     this.shipImg.src = 'images/ship-resize.png';
     // will center if ship image is changed...
