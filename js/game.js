@@ -73,6 +73,7 @@ class Game {
     // this.progressAni = timestamp - this.startTimestamp;
 
     this.difficulty();
+    this.sea.update();
     this.obstacles.generateObstacles();
     this.obstacles.updateObstacles();
   }

@@ -31,16 +31,16 @@ class Controls {
     });
 
 
-    // window.addEventListener('keyup', event => {
-    //   switch (event.keyCode) {
-    //     //LEFT
-    //     case 37:
-    //       this.game.ship.course= 0;
-    //       break;
-    //     //RIGHT
-    //     case 39:
-    //       this.game.ship.course = 0;
-    //       break;
+    window.addEventListener('keyup', event => {
+      switch (event.keyCode) {
+        //LEFT
+        case 37:
+          this.game.ship.position.x -= 6;
+          break;
+        //RIGHT
+        case 39:
+          this.game.ship.position.x += 6;
+          break;
     //     //UP
     //     case 38:
     //       this.game.ship.velocity = 0;
@@ -49,7 +49,7 @@ class Controls {
     //     case 40:
     //       this.game.ship.velocity = 0;
     //       break;
-    //   }
-    // });
+      }
+    });
   }
 }

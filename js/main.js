@@ -7,7 +7,6 @@ $button.addEventListener('click', () => {
   game.clearAll();
   game.reset();
   game.startGame();
-  console.log('RESET?');
 });
 
 function startFade() {
