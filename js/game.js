@@ -14,6 +14,7 @@ class Game {
     this.controls.setControls();
     this.obstacles = new Obstacles(this);
     this.level = 1;
+    this.levelInterval = 30000;
     this.score = 1;
 
     this.animationRef = null;
@@ -35,9 +36,9 @@ class Game {
     // call everything
     this.animation();
     this.sound = new Sound();
-    // this.sound.playWind();
+    this.sound.playWind();
     this.sound.playSoundsAll();
-    this.sound.playIceberg();
+    // this.sound.playIceberg();
   }
 
 
@@ -84,9 +85,14 @@ class Game {
 
   
   difficulty() {
-    if (this.score > 0 && this.score % 10 === 0) {
+    // setInterval( () => {
+    //   this.level += 1;
+    //   this.ship.velocity *= 1.01;
+    // }, this.levelInterval )
+    if (this.score > 0 && this.score % 20 < 3) {
       this.level += 1;
       this.score += 1;
+      this.ship.velocity *= 1.01;
     }
   }
   
@@ -100,6 +106,7 @@ class Game {
     for (let obstacle of this.obstacles.obstaclesArr) {
       if (this.isCollison(this.ship.position, obstacle)) {
         window.cancelAnimationFrame(this.animationRef);
+        this.sound.stopSoundsAll();
         this.gameOver();
         this.ship.velocity = 0;
       }

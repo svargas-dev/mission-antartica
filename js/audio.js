@@ -2,6 +2,7 @@ class Sound {
   constructor(game) {
     this.game = game;
     this.timerID;
+    this.icebergInterval;
   }
 
 
@@ -21,8 +22,15 @@ class Sound {
     this.timerID = setInterval(() => {
       this.playWind();
     }, 9200);
-
+    // random repeat loop between 90s and 120s
+    // setInterval( () => {
+    //   this.icebergInterval = (Math.random() * 90000) + 30000;
+    // }, 59000);
+    // setInterval( () => {
+    //   this.playIceberg();
+    // }, this.icebergInterval);
   }
+
 
   stopSoundsAll () {
     clearInterval(this.timerID);
