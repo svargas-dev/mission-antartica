@@ -37,7 +37,22 @@ class Game {
     this.sea.draw();
     this.ship.draw();
     this.obstacles.draw();
-    console.log(this.score);
+    // console.log(this.score);
+    this.drawTopBar();
+  }
+
+
+  drawTopBar() {
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect(0, 0, 640, 32);
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = 'bold 20px "Courier New"';
+
+    //Score
+    this.ctx.fillText('Score: ' + this.score, 20, 24);
+    //Level
+    this.ctx.fillText('Level: ' + this.level, 280, 24);
+    // Health will go here
   }
 
 
@@ -81,7 +96,7 @@ class Game {
     // requestAnimationFrame will generate a timestamp that we will use it as a reference
     //  for doing other things, and call the animation() again
     const animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
-    for (let obstacle of this.obstacles.icebergArr) {
+    for (let obstacle of this.obstacles.obstaclesArr) {
       // console.log(obstacle);
       if (this.isCollison(this.ship.position, obstacle)) {
         window.cancelAnimationFrame(animationRef);

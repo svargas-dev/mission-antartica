@@ -20,15 +20,17 @@ class Controls {
         
         //This doesn't do anything yet.
         //UP
-        case 38:
-          this.game.ship.velocity += -5;
-          break;
-        //DOWN
-        case 40:
-          this.game.player.velocity += 5;
-          break;
+      //   case 38:
+      //     this.game.ship.velocity += 1;
+      //     break;
+      //   //DOWN
+      //   case 40:
+      //     this.game.player.velocity -= 1;
+      //     break;
       }
     });
+
+
     // window.addEventListener('keyup', event => {
     //   switch (event.keyCode) {
     //     //LEFT

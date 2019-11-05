@@ -6,8 +6,7 @@ class Ship {
     this.shipImg.src = 'images/ship-resize.png';
     // will center if ship image is changed...
     this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": ${this.game.HEIGHT - this.shipImg.height - 150}, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
-    // this.position = {"x": 320, "y": 340, "width": 32, "height": 135};
-    this.course = 0;
+    this.course = 0; // I will have rotation of the ship on the canvas...
     this.velocity = 2; //px
   }
 
