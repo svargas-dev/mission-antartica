@@ -3,7 +3,7 @@ class Obstacles {
     this.game = game;
     this.icebergImg = new Image();
     this.icebergImg.src = 'images/iceberg-bergy.png';
-    // will contain objects with x, y
+    // will contain objects with x, y, width, height & type
     this.obstaclesArr = [];
   }
 
@@ -29,18 +29,11 @@ class Obstacles {
   draw() {
     const ctx = this.game.ctx;
     for (let obstacle of this.obstaclesArr) {
-      // console.log(iceberg);
-      // iceberg.y += this.game.ship.velocity;
       ctx.drawImage(this.icebergImg, obstacle.x, obstacle.y);
     }
   }
 
-  
-  // if (this.obstaclesArray.length === 0) {
-  //   this.obstaclesArray.push(JSON.parse(`{"xSqs" : ${obstacleX}, "ySqs" : -2, "widthSqs": ${widthSqs}}`));
-  // } else if (this.obstaclesArray.length < 4) {
-  //   let obstacleY = this.obstaclesArray[this.obstaclesArray.length-1].ySqs - 7;
-  //   this.obstaclesArray.push(JSON.parse(`{"xSqs" : ${obstacleX}, "ySqs" : ${obstacleY}, "widthSqs": ${widthSqs}}`));
-  // }
-
+  reset() {
+    this.obstaclesArr = [];
+  }
 }

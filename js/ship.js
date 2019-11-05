@@ -11,11 +11,12 @@ class Ship {
 
 
   draw() {
-    if (this.course != 0) {
-      this.drawNewCourse();
-    } else {
-      this.game.ctx.drawImage(this.shipImg, this.position.x - this.shipImg.width/2, this.position.y);
-    }
+    this.game.ctx.drawImage(this.shipImg, this.position.x - this.shipImg.width/2, this.position.y);
+    // if (this.course != 0) {
+    //   this.drawNewCourse();
+    // } else {
+    //   this.game.ctx.drawImage(this.shipImg, this.position.x - this.shipImg.width/2, this.position.y);
+    // }
   }
 
   
@@ -31,7 +32,6 @@ class Ship {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, 32, 32);
     
-    
     // rotate the canvas to the specified degrees
     ctx.rotate(this.course*Math.PI/180);
 
@@ -42,10 +42,14 @@ class Ship {
     // since the context is rotated, the image will be rotated also
     ctx.drawImage(this.shipImg, this.position[0] - this.shipImg.width/2, this.position[1]- this.shipImg.width/2);
     
-    
-
     // we’re done with the rotating so restore the unrotated context
     ctx.restore();
   }
 
+
+  reset() {
+    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": 340, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
+    this.course = 0;
+    this.velocity = 2;
+  }
 }

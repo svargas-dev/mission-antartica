@@ -16,9 +16,13 @@ class Game {
     this.level = 1;
     this.score = 1;
 
-    this.startTimestamp = null;
+    this.animationRef = null;
+    // this.startTimestamp = null;
     this.progressAni;
-    this.obstacleGenSpeed = 3000;
+    // this.obstacleGenSpeed = 3000; // 
+
+    this.gameOverImg = new Image();
+    this.gameOverImg.src = 'images/game-over.png';
   }
 
   // startScr() {
@@ -38,7 +42,6 @@ class Game {
     this.sea.draw();
     this.ship.draw();
     this.obstacles.draw();
-    // console.log(this.score);
     this.drawTopBar();
   }
 
@@ -88,11 +91,12 @@ class Game {
     this.updateEverything(timestamp);
     this.drawEverything();
     
-    const animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
+    this.animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
     for (let obstacle of this.obstacles.obstaclesArr) {
       if (this.isCollison(this.ship.position, obstacle)) {
-        window.cancelAnimationFrame(animationRef);
-        gameOver();
+        window.cancelAnimationFrame(this.animationRef);
+        this.gameOver();
+        this.ship.velocity = 0;
       }
     }
   }
@@ -103,12 +107,19 @@ class Game {
     return object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y;
   }
 
+  gameOver() {
+    //in main.js
+    resetButton();
+    // I get a race condition if I declare the image here so it's in the constructor
+    this.ctx.drawImage(this.gameOverImg, 0, 0);
+  }
 
-  // gameOver() {
-  //   // const ctx = this.ctx;
-  //   // ctx.fillStyle = 'red';
-  //   // ctx.fillRect(this.WIDTH / 2, this.HEIGHT / 2, 64, 64);
-
-
-  // }
+  reset () {
+    this.animationRef = null;
+    this.level = 1;
+    this.score = 0;
+    // this.obstacleGenSpeed = 3000; // Not used yet...
+    this.ship.reset();
+    this.obstacles.reset();
+  }
 }

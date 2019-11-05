@@ -1,38 +1,35 @@
+const $button = document.getElementById('start-btn');
 const $canvas = document.querySelector('canvas');
 
-const game = new Game($canvas);
-const startBtn = document.getElementById('start-btn');
-
-
-window.addEventListener('load', () => {
-    startBtn.addEventListener('click', () => {
-      startFade();
-      game.startGame();
-    });
+$button.addEventListener('click', () => {
+  const game = new Game($canvas);
+  startFade();
+  game.clearAll();
+  game.reset();
+  game.startGame();
+  console.log('RESET?');
 });
 
 function startFade() {
   const elementsToFade = document.querySelectorAll('.fade');
+  setTimeout( () => {
+    $button.style.display = 'none';
+  });
+
   for (let elementToFade = 0; elementToFade < elementsToFade.length; elementToFade++) {
     elementsToFade[elementToFade].classList = 'fade-out';
   }
   setTimeout( () => {
     for (let elementToFade = 0; elementToFade < elementsToFade.length; elementToFade++) {
-      elementsToFade[elementToFade].hidden =  'true';
+      elementsToFade[elementToFade].style.display =  'none';
       // console.dir(elementsToFade[elementToFade]);
     }
   }, 2000);
 }
 
-function gameOver() {
-  $canvas.classList = 'fade-out';
-  
-  const $button = document.querySelector('button');
+function resetButton() {
+  $canvas.style.display = 'block';
   $button.innerText = 'PLAY AGAIN';
+  $button.style.display = 'block';
   $button.classList = 'fade-in';
-  $button.hidden = 'false';
-
-  const $gameOver = document.getElementById('game-over');
-  $gameOver.style.display = 'block'
-  $gameOver.classList = 'fade-in';
 }
