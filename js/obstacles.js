@@ -1,39 +1,48 @@
 class Obstacles {
   constructor(game) {
     this.game = game;
+    this.icebergImg = new Image();
+    this.icebergImg.src = 'images/iceberg-bergy.png';
     // will contain objects with x, y
-    this.icebergArr = [];
+    this.icebergArr = [{"x" : 320, "y" : 0, "width": 96, "height": 136}];
     this.bergyArr = [];
     this.growler = [];
     this.whales = [];
 
-    this.icebergImg = new Image();
-    this.icebergImg.src = 'images/iceberg-bergy.png';
   }
 
   generateIcebergs() {
+    // console.log(this.game.progressAni % this.game.obstacleGenSpeed < 50);
+    // console.log(this.game.progressAni);
+    // console.log(this.game.startTimestamp - timestamp);
+  
     if (this.icebergArr.length === 0) {
       let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
       let newIceberg = `{"x" :${randomX}, "y" : 0, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}}`;
       this.icebergArr.push(JSON.parse(newIceberg));
-    } else if (this.icebergArr.length < this.game.level) {
+    } else if (this.icebergArr.length <= this.game.level) {
       let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
-      let randomY = Math.floor(Math.random() * this.game.HEIGHT/6) - this.icebergImg.height;
+      let randomY = Math.floor(Math.random() * this.game.HEIGHT/8) - this.icebergImg.height;
       let newIceberg = `{"x" :${randomX}, "y" : ${randomY}, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}}`;
       this.icebergArr.push(JSON.parse(newIceberg));
     }
+
+    // if (Math.round(this.game.progressAni) % this.game.obstacleGenSpeed < 10 && 
+    //     this.icebergArr.length < this.game.level) {
+    //   let randomX = Math.floor(Math.random() * this.game.WIDTH) - this.icebergImg.width/2;
+    //   let randomY = Math.floor(Math.random() * this.game.HEIGHT/8) - this.icebergImg.height;
+    //   let newIceberg = `{"x" :${randomX}, "y" : ${randomY}, "width": ${this.icebergImg.width}, "height": ${this.icebergImg.height}}`;
+    //   this.icebergArr.push(JSON.parse(newIceberg));
+    // }
   }
 
   updateIcebergs() {
-    // console.log(iceberg);
-    if (this.icebergArr[0].y > this.game.HEIGHT) {
-      // console.log(ice)
+    for (let iceberg of this.icebergArr) {
+      iceberg.y += this.game.ship.velocity;
+    }
+    if (this.icebergArr[0].y > this.game.HEIGHT && this.icebergArr.length > 1) {
       this.icebergArr.shift();
-      this.generateIcebergs();
-    } else {
-      for (let iceberg of this.icebergArr) {
-        iceberg.y += this.game.ship.velocity;
-      }
+      this.game.score += 1;
     }
   }
 
