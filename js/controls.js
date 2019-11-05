@@ -18,15 +18,15 @@ class Controls {
           this.game.ship.position.x += 5;
           break;
         
-        //This doesn't do anything yet.
+        //This doesn't do anything yet...
         //UP
-      //   case 38:
-      //     this.game.ship.velocity += 1;
-      //     break;
-      //   //DOWN
-      //   case 40:
-      //     this.game.player.velocity -= 1;
-      //     break;
+        //case 38:
+        //  this.game.ship.velocity += 1;
+        //  break;
+        //DOWN
+        //case 40:
+        //  this.game.player.velocity -= 1;
+        //  break;
       }
     });
 

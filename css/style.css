@@ -33,15 +33,10 @@ img {
 
 .fade-in {
   animation: fade-in 5s;
-  /* background: blue; */
 }
 
 .fade-out {
   animation: fade-out 2s;
-}
-
-.button-fade-out {
-  animation: fade-out 0.5s;
 }
 
 #start-btn {
@@ -57,13 +52,4 @@ img {
   background-color: black;
   border-radius: 0.2em;
   padding: 1em 2em 2em 2em;
-}
-
-#game-over {
-  position: absolute;
-  display: none;
-}
-
-.game-over {
-  animation: fade-in 2s;
 }

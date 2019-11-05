@@ -112,6 +112,7 @@ class Game {
     resetButton();
     // I get a race condition if I declare the image here so it's in the constructor
     this.ctx.drawImage(this.gameOverImg, 0, 0);
+    this.ctx.fillText('Final Score:  ' + this.score, 220, 200);
   }
 
   reset () {
