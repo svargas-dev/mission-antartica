@@ -26,9 +26,10 @@ class Obstacles {
 
   generateObstacles(selectedObsType) {
     const obstacleImg = selectedObsType + 'Img';
+    // const obsType = selectedObsType;
     const randomX = Math.floor(Math.random() * this.game.WIDTH) - this[obstacleImg].width/2;
     const randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this[obstacleImg].height);
-    const newObs = `{"x" :${randomX}, "y" : ${randomY}, "width": ${this[obstacleImg].width}, "height": ${this[obstacleImg].height}, "type": "${selectedObsType}"}`;
+    const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width}, "height" : ${this[obstacleImg].height}, "type" : "${selectedObsType}", "collision" : "false" }`;
     this.obstaclesArr.push(JSON.parse(newObs));
   }
 
