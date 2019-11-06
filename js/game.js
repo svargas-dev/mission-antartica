@@ -1,6 +1,3 @@
-// need function spriteAtlas()
-// sprites will be 32x32 - 16bit
-
 class Game {
   constructor($canvas) {
     this.canvas = $canvas;
@@ -14,29 +11,21 @@ class Game {
     this.controls.setControls();
     this.obstacles = new Obstacles(this);
     this.level = 1;
-    this.levelInterval = 30000;
     this.score = 1;
 
     this.animationRef = null;
     // this.startTimestamp = null;
-    this.progressAni;
-    // this.obstacleGenSpeed = 3000; // 
+    // this.progressAni;
 
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
   }
 
-  // startScr() {
-  //   If I have time ...
-  //   Set up layers and movement
-  //   fade out
-  // }
-
   startGame() {
     // call everything
     this.animation();
     this.sound = new Sound();
-    this.sound.playWind();
+    // this.sound.playWind();
     this.sound.playSoundsAll();
     // this.sound.playIceberg();
   }
@@ -79,20 +68,17 @@ class Game {
 
     this.difficulty();
     this.sea.update();
-    this.obstacles.generateObstacles();
+    this.obstacles.selectObstacles();
     this.obstacles.updateObstacles();
   }
 
   
   difficulty() {
-    // setInterval( () => {
-    //   this.level += 1;
-    //   this.ship.velocity *= 1.01;
-    // }, this.levelInterval )
-    if (this.score > 0 && this.score % 20 < 3) {
+    if (this.score > 0 && this.score % 20 === 0) {
       this.level += 1;
       this.score += 1;
-      this.ship.velocity *= 1.01;
+      console.log('level up!'); //draw something on screen
+      this.ship.velocity *= 1.005;
     }
   }
   
