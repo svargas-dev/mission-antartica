@@ -20,15 +20,16 @@ class Game {
 
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
-  }
+
+    }
 
   startGame() {
     // call everything
     this.animation();
     this.sound = new Sound();
-    // this.sound.playWind();
+    this.sound.playWind();
     this.sound.playSoundsAll();
-    // this.sound.playIceberg();
+    
   }
 
 
@@ -77,9 +78,7 @@ class Game {
 
   updateHealth() {
     for (let obstacle of this.obstacles.obstaclesArr) {
-      // Right now this is way too quick!
       if (this.isCollison(this.ship.position, obstacle)) {
-        console.log('Collision!')
         switch (obstacle.type) {
           case 'iceberg':
             this.health -= 5;
@@ -109,9 +108,16 @@ class Game {
     if (this.score > 0 && this.score % 20 === 0) {
       this.level += 1;
       this.score += 1;
-      console.log('level up!'); //draw something on screen
-      this.ship.velocity *= 1.005;
+      // console.log('level up!'); //draw something on screen
+      this.drawLevelUp();
+      this.obstacles.velocity *= 1.005;
     }
+  }
+
+  drawLevelUp() {
+    const ctx = this.ctx;
+    ctx.fillStyle = 'red';
+    ctx.fillRect(250, 200, 100, 100);
   }
   
   
@@ -127,14 +133,6 @@ class Game {
       this.gameOver();
       this.ship.velocity = 0;
     }
-    // for (let obstacle of this.obstacles.obstaclesArr) {
-    //   if (this.isCollison(this.ship.position, obstacle)) {
-    //     window.cancelAnimationFrame(this.animationRef);
-    //     this.sound.stopSoundsAll();
-    //     this.gameOver();
-    //     this.ship.velocity = 0;
-    //   }
-    // }
   }
   
 
@@ -147,6 +145,7 @@ class Game {
     } else {
       if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
         object2.collision = true;
+        this.sound.playImpact();
         return true;
       } else {
         return false;
@@ -155,6 +154,7 @@ class Game {
   }
 
   gameOver() {
+    this.sound.playGameOver();
     //in main.js
     resetButton();
     // I get a race condition if I declare the image here so it's in the constructor

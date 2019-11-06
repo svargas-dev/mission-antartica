@@ -23,25 +23,43 @@ html, body {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   font-family: 'Courier New', Courier, monospace;
 }
 
-img {
+#monitor {
+  position: absolute;
+  top: 30px;
+}
+
+canvas {
+  position: absolute;
+  top: 95px;
+}
+
+#start {
+  position: absolute;
+  top: 95px;
+}
+
+#monitor{
+  /* top: 6em; */
   position: absolute;
 }
 
 .fade-in {
+  position: absolute;
   animation: fade-in 5s;
 }
 
 .fade-out {
+  position: absolute;
   animation: fade-out 2s;
 }
 
 #start-btn {
   position: absolute;
-  top: 60%;
+  top: 420px;
   height: 3em;
   width: auto;
   font-size: 2em;

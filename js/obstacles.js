@@ -14,6 +14,8 @@ class Obstacles {
     // will contain objects with x, y, width, height & type
     this.obstaclesArr = [];
     this.obstacleTypes = [ "iceberg", "bergy", "growler" ];
+
+    this.velocity = 2;
   }
 
   selectObstacles() {
@@ -36,7 +38,7 @@ class Obstacles {
 
   updateObstacles() {
     for (let obstacle of this.obstaclesArr) {
-      obstacle.y += this.game.ship.velocity;
+      obstacle.y += this.velocity;
     }
     if (this.obstaclesArr[0].y > this.game.HEIGHT && this.obstaclesArr.length > 1) {
       switch (this.obstaclesArr[0].type) {

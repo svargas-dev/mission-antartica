@@ -2,7 +2,7 @@ class Sea {
   constructor(game) {
     this.game = game;
     this.y = 0;
-    // this.velocityY = 1;
+    this.velocity = 1;
     this.img = new Image();
     this.img.src = 'images/sea-bg2.png';
   }
@@ -19,7 +19,7 @@ class Sea {
   }
 
   update() {
-    this.y += 1;
+    this.y += this.velocity;
 
     if (this.y >= this.game.HEIGHT) {
       this.y = 0;
