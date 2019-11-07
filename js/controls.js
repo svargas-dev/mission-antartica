@@ -6,6 +6,7 @@ class Controls {
 
   // to do: prevent default
   setControls() {
+    // let secondsPassed = this.game.secondsPassed;
     window.addEventListener('keydown', event => {
       switch (event.keyCode) {
         //LEFT
@@ -42,27 +43,27 @@ class Controls {
     });
 
 
-    window.addEventListener('keyup', event => {
-      switch (event.keyCode) {
-        case 37:
-            if (this.game.ship.position.x <= this.game.WIDTH && 
-                this.game.ship.position.x > this.horMove/2) {
-              this.game.ship.position.x -= this.horMove/2;
-            } else {
-              this.game.sound.playClang();
-            }
-            // this.game.ship.course -= 2;
-            break;
-          //RIGHT
-          case 39:
-            if (this.game.ship.position.x < (this.game.WIDTH - this.horMove/2) && 
-            this.game.ship.position.x >= 0) {
-              this.game.ship.position.x += this.horMove/2;
-              // this.game.ship.course += 2;
-            } else {
-              this.game.sound.playClang();
-            }
-            break;
+    // window.addEventListener('keyup', event => {
+    //   switch (event.keyCode) {
+    //     case 37:
+    //         if (this.game.ship.position.x <= this.game.WIDTH && 
+    //             this.game.ship.position.x > this.horMove/2) {
+    //           this.game.ship.position.x -= this.horMove/2;
+    //         } else {
+    //           this.game.sound.playClang();
+    //         }
+    //         // this.game.ship.course -= 2;
+    //         break;
+    //       //RIGHT
+    //       case 39:
+    //         if (this.game.ship.position.x < (this.game.WIDTH - this.horMove/2) && 
+    //         this.game.ship.position.x >= 0) {
+    //           this.game.ship.position.x += this.horMove/2;
+    //           // this.game.ship.course += 2;
+    //         } else {
+    //           this.game.sound.playClang();
+    //         }
+    //         break;
         
         // //LEFT
         // case 37:
@@ -83,7 +84,7 @@ class Controls {
         // case 40:
         //   this.game.ship.position.y += 1;
         //   break;
-      }
-    });
+    //   }
+    // });
   }
 }

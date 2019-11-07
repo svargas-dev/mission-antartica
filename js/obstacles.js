@@ -11,9 +11,12 @@ class Obstacles {
     //Iceberg
     this.icebergImg = new Image();
     this.icebergImg.src = 'images/iceberg.png';
+    // Animals
+    this.orcaImg = new Image();
+    this.orcaImg.src = 'images/orca.png';
     // will contain objects with x, y, width, height & type
     this.obstaclesArr = [];
-    this.obstacleTypes = [ "iceberg", "bergy", "growler" ];
+    this.obstacleTypes = [ "iceberg", "bergy", "growler", "orca" ];
 
     this.velocity = 2;
   }
@@ -62,15 +65,15 @@ class Obstacles {
       switch (obstacle.type) {
         case 'iceberg':
           ctx.drawImage(this.icebergImg, obstacle.x, obstacle.y);
-          // console.log('Iceberg drawn');
           break;
         case 'bergy':
           ctx.drawImage(this.bergyImg, obstacle.x, obstacle.y);
-          // console.log('Bergy drawn');
           break;
         case 'growler':
           ctx.drawImage(this.growlerImg, obstacle.x, obstacle.y);
-          // console.log('Growler drawn');
+          break;
+        case 'orca':
+          ctx.drawImage(this.orcaImg, obstacle.x, obstacle.y);
           break;
       }
     }

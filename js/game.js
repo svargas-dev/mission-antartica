@@ -8,39 +8,48 @@ class Game {
     this.sea = new Sea(this);
     this.ship = new Ship(this);
     this.controls = new Controls(this);
-    this.controls.setControls();
     this.obstacles = new Obstacles(this);
     this.level = 1;
     this.score = 1;
     this.health = 10;
 
     this.animationRef = null;
-    // this.startTimestamp = null;
-    // this.progressAni;
-
+    
+    this.levelupAlert = null;
+    this.murderer = null;
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
+  }
 
-    }
 
   startGame() {
     // call everything
+    this.controls.setControls();
     this.animation();
     this.sound = new Sound();
     this.sound.playWind();
-    this.sound.playSoundsAll();
-    
+    this.sound.playSoundsAll();    
   }
 
 
-  drawEverything() {
+  drawEverything(timestamp) {
     this.clearAll();
     this.sea.draw();
-    this.ship.draw();
     this.obstacles.draw();
+    this.ship.draw(timestamp);
     this.drawTopBar();
+    if (this.murderer) {
+      this.drawMurderer();
+    }
+    if (this.levelupAlert) {
+      this.drawLevelUp();
+      setTimeout( () => {
+        this.levelupAlert = null;
+      }, 2500);
+    }
   }
 
+  
   // To use custom fonts I'll have to use DOM manipulation...
   drawTopBar() {
     this.ctx.fillStyle = 'white';
@@ -51,7 +60,7 @@ class Game {
     //Score
     this.ctx.fillText('Score: ' + this.score, 20, 24);
     //Level
-    this.ctx.fillText('Level: ' + this.level, 280, 24);
+    this.ctx.fillText('Level: ' + this.level, 260, 24);
     // Health will go here
     this.drawHealth();
   }
@@ -62,19 +71,14 @@ class Game {
   }
 
 
-  updateEverything(timestamp) {
-    // Not used yet...
-    // if (!this.startTimestamp) {
-    //   this.startTimestamp = timestamp;
-    // }
-    // this.progressAni = timestamp - this.startTimestamp;
-
-    this.updateHealth();
-    this.difficulty();
+  updateEverything() {
     this.sea.update();
     this.obstacles.selectObstacles();
     this.obstacles.updateObstacles();
+    this.updateHealth();
+    this.difficulty();
   }
+
 
   updateHealth() {
     for (let obstacle of this.obstacles.obstaclesArr) {
@@ -89,11 +93,24 @@ class Game {
           case 'growler':
             this.health -= 1;
             break;
+          case 'orca':
+            // this.health = 0;
+            //insert display
+            this.murderer = true;
+            // settimeout for alert
+            this.obstacles.velocity = 0;
+            this.sea.velocity = 0;
+            setTimeout( () => {
+              this.alert = null;
+              this.gameOver();
+            }, 3000);
+            break;
         }
       }
       console.log(this.health);
     }
   }
+
 
   drawHealth() {
     let startX = 440;
@@ -104,34 +121,51 @@ class Game {
     }
   }
   
+
   difficulty() {
-    if (this.score > 0 && this.score % 20 === 0) {
+    if (this.score > 0 && this.score % 10 === 0) {
       this.level += 1;
       this.score += 1;
-      // console.log('level up!'); //draw something on screen
-      this.drawLevelUp();
       this.obstacles.velocity *= 1.005;
+      //set alert & cancel
+      this.levelupAlert = true;
     }
   }
 
+
+  drawMurderer() {
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillRect(180, 100, 280, 100);
+    this.ctx.fillStyle = 'white'
+    this.ctx.font = 'bold 48px "Courier New"';
+    this.ctx.fillText('MURDERER!', 200, 150);
+  }
+
+
   drawLevelUp() {
     const ctx = this.ctx;
-    ctx.fillStyle = 'red';
-    ctx.fillRect(250, 200, 100, 100);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(270, 60, 100, 40);
+    ctx.font = 'blod 32px "Courier New"';
+    ctx.fillStyle = 'white';
+    ctx.fillText('LEVEL UP', 272, 86);
   }
   
   
   animation(timestamp) {
-    //   console.log(timestamp)
+    // //   console.log(timestamp)
+    // this.secondsPassed = (timestamp - this.oldTimeStamp) / 1000;
+    // this.oldTimestamp = timestamp;
+
     this.updateEverything(timestamp);
-    this.drawEverything();
+    this.drawEverything(timestamp);
     
     this.animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
     if (this.health <= 0) {
       window.cancelAnimationFrame(this.animationRef);
       this.sound.stopSoundsAll();
       this.gameOver();
-      this.ship.velocity = 0;
+      this.obstacles.velocity = 0;
     }
   }
   
@@ -153,6 +187,7 @@ class Game {
     }
   }
 
+
   gameOver() {
     this.sound.playGameOver();
     //in main.js
@@ -162,12 +197,13 @@ class Game {
     this.ctx.fillText('Final Score:  ' + this.score, 220, 200);
   }
 
+
   reset () {
     this.animationRef = null;
     this.level = 1;
     this.score = 0;
-    // this.obstacleGenSpeed = 3000; // Not used yet...
     this.ship.reset();
     this.obstacles.reset();
   }
+
 }

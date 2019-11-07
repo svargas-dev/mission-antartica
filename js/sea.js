@@ -4,7 +4,7 @@ class Sea {
     this.y = 0;
     this.velocity = 1;
     this.img = new Image();
-    this.img.src = 'images/sea-bg2.png';
+    this.img.src = 'images/sea.png';
   }
 
   draw() {
