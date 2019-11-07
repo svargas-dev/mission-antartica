@@ -52,15 +52,13 @@ class Game {
     this.obstacles.updateObstacles();
     this.updateHealth();
     this.sea.update();
+    this.ship.update();
   }
   
   
   updateHealth() {
     for (let obstacle of this.obstacles.obstaclesArr) {
-      console.log(this.obstacles.obstaclesArr[0])
-      debugger;
       if (this.isCollison(this.ship.position, obstacle)) {
-        console.log("1st")
         switch (obstacle.type) {
           case 'iceberg':
             this.health -= 5;
@@ -93,7 +91,7 @@ class Game {
     if (object2.collision === true) { // If already collided ignore
       return false;
     } else {
-      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
+      if (object1.x - this.ship.shipImg.width/2 < object2.x + object2.width && object1.x - this.ship.shipImg.width/2 + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
         object2.collision = true;
         this.sound.playImpact();
         this.collision = true;

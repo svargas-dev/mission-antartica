@@ -4,19 +4,25 @@ class Ship {
     this.shipImg = new Image();
     this.shipImg.src = 'images/ship-resize.png';
     // will center if ship image is changed...
-    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": ${this.game.HEIGHT - this.shipImg.height - 150}, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
-    // this.velocityX = 0; //px
-    this.accelFactor = 0.1;
-    
+    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": ${this.game.HEIGHT - this.shipImg.height - 300}, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
+    // this.position = {"x": 320, "y": 180, "width": 32, "height": 135};
+    this.vx = 0;  //horizontal acceleration
+        
     //Smooth animations for rotation
-    this.accelCo = 0;
-    this.targetCourse = 0;
-    this.previousCourse = 0;
-    this.currentCourse = 0;
-
-    // this.vx = 0;  //horizontal acceleration
+    // this.accelCo = 0;
+    // this.targetCourse = 0;
+    // this.previousCourse = 0;
+    // this.currentCourse = 0;
   }
 
+  update() {
+    if (this.position.x + this.vx < this.game.WIDTH && 
+        this.position.x + this.vx > 0) {
+      this.position.x += this.vx;
+    } else {
+      this.game.sound.playClang();
+    }
+  }
 
   draw() {
     // this.drawNewCourse();
