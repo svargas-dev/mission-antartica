@@ -26,6 +26,8 @@ class Game {
     this.penguin = null;
     this.albatross = null;
 
+    this.flag = null;
+
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
   }
@@ -152,6 +154,9 @@ class Game {
     if (this.levelupAlert) {
       this.drawLevelUp();
     }
+    if (this.flag) {
+      this.drawHello();
+    }
   }
     
   
@@ -164,7 +169,7 @@ class Game {
     //Score
     this.ctx.fillText('Score: ' + this.score, 20, 24);
     //Level
-    this.ctx.fillText('Level: ' + this.level, 260, 24);
+    this.ctx.fillText('Level: ' + this.level, 270, 24);
     // Health will go here
     this.drawHealth();
   }
@@ -243,6 +248,31 @@ class Game {
     this.sea.velocity = 1;
     this.ship.reset();
     this.obstacles.reset();
+  }
+
+  drawHello() {
+    const hello = new Image();
+    hello.src = 'images/hello.png';
+    this.ctx.drawImage(hello, 170, 90);
+  }
+
+  easterEgg($canvas, event) {
+    const rect = $canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    console.log("x: " + x + " y: " + y);
+    if (x > this.ship.position.x && x < this.ship.position.x + 32 &&
+        y > 345) {
+        this.flag = true;
+        this.sea.velocity = 0;
+        this.obstacles.velocity = 0;
+        this.sound.playHello();
+        setTimeout( () => {
+          this.flag = null;
+          this.sea.velocity = 1;
+          this.obstacles.velocity = 2;
+        }, 1500)
+    }
   }
 
 }

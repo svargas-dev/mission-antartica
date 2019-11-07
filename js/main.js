@@ -7,7 +7,12 @@ $button.addEventListener('click', () => {
   game.clearAll();
   game.reset();
   game.startGame();
+  
+  $canvas.addEventListener('mousedown', function(event) {
+    game.easterEgg($canvas, event);
+  })
 });
+
 
 function startFade() {
   const elementsToFade = document.querySelectorAll('.fade');
@@ -25,6 +30,7 @@ function startFade() {
     }
   }, 2000);
 }
+
 
 function resetButton() {
   $canvas.style.display = 'block';

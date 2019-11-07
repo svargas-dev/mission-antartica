@@ -38,6 +38,11 @@ class Sound {
     penguin.play();
   }
 
+  playHello() {
+    const hello = new Audio('audio/hello.ogg');
+    hello.play();
+  }
+
   playGameOver() {
     const iceberg = new Audio('audio/end-game.ogg');
     iceberg.play();
