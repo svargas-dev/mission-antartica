@@ -21,6 +21,7 @@ class Obstacles {
     this.velocity = 2;
   }
 
+
   selectObstacles() {
     if (this.obstaclesArr.length <= this.game.level) {
       const selectObstacleIndex = Math.floor(Math.random() * this.obstacleTypes.length);
@@ -29,11 +30,12 @@ class Obstacles {
     }
   }
 
+
   generateObstacles(selectedObsType) {
     const obstacleImg = selectedObsType + 'Img';
     const randomX = Math.floor(Math.random() * this.game.WIDTH) - this[obstacleImg].width/2;
     const randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this[obstacleImg].height);
-    const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width}, "height" : ${this[obstacleImg].height}, "type" : "${selectedObsType}", "collision" : "false" }`;
+    const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width}, "height" : ${this[obstacleImg].height}, "type" : "${selectedObsType}", "collision" : null }`;
     this.obstaclesArr.push(JSON.parse(newObs));
   }
 
@@ -42,21 +44,27 @@ class Obstacles {
     for (let obstacle of this.obstaclesArr) {
       obstacle.y += this.velocity;
     }
-    if (this.obstaclesArr[0].y > this.game.HEIGHT && this.obstaclesArr.length > 1) {
-      switch (this.obstaclesArr[0].type) {
-        case 'iceberg':
-          this.game.score += 1;
-          break;
-        case 'bergy':
-          this.game.score += 1;
-          break;
-        case 'growler':
-          this.game.score += 1;
-          break;
-      }
+    if (this.obstaclesArr[0].y >= this.game.HEIGHT) {
+      this.game.score += 1;
       this.obstaclesArr.shift();
     }
   }
+  
+    // if (this.obstaclesArr[0].y > this.game.HEIGHT && this.obstaclesArr.length > 1) {
+    //   switch (this.obstaclesArr[0].type) {
+    //     case 'iceberg':
+    //       this.game.score += 1;
+    //       break;
+    //     case 'bergy':
+    //       this.game.score += 1;
+    //       break;
+    //     case 'growler':
+    //       this.game.score += 1;
+    //       break;
+    //   }
+      // this.obstaclesArr.shift();
+    // }
+  // }
 
   draw() {
     const ctx = this.game.ctx;

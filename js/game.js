@@ -15,10 +15,11 @@ class Game {
     this.health = 10;
     
     this.pause = null;
-    this.animationRef = null;
     
+    this.collision = null;
     this.levelupAlert = null;
     this.murderer = null;
+
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
   }
@@ -27,18 +28,99 @@ class Game {
   startGame() {
     // call everything
     this.animation();
+    //Backround sounds
     this.sound = new Sound();
     this.sound.playWind();
     this.sound.playSoundsAll();    
   }
 
+  
+  updateEverything() {
+    this.obstacles.selectObstacles();
+    this.updateHealth();
+    this.obstacles.updateObstacles();
+    this.updateDifficulty();
+    this.sea.update();
+  }
 
+  //Maybe change to setInterval..
+  updateDifficulty() {
+    if (this.score > 0 && this.score % 10 === 0) {
+      this.level += 1;
+      this.score += 1;
+      this.obstacles.velocity *= 1.005;
+      //set alert & cancel
+      this.levelupAlert = true;
+    }
+  }
+  
+  
+  updateHealth() {
+    for (let obstacle of this.obstacles.obstaclesArr) {
+      if (this.isCollison(this.ship.position, obstacle)) {
+        switch (obstacle.type) {
+          case 'iceberg':
+            this.health -= 5;
+            break;
+          case 'bergy':
+            this.health -= 3;
+            break;
+          case 'growler':
+            this.health -= 1;
+            break;
+          case 'orca':
+            this.murderer = true;
+            this.obstacles.velocity = 0;
+            this.sea.velocity = 0;
+            this.pause = true;
+            // settimeout for alert
+            setTimeout( () => {
+              this.alert = null;
+              this.gameOver();
+            }, 3000);
+            break;
+        }
+      }
+    }
+  }
+
+
+  // compares the properties of two objects and returns true or false
+  isCollison(object1, object2) {
+    if (object2.collision === true) { // If already collided ignore
+      return false;
+    } else {
+      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
+        object2.collision = true;
+        this.sound.playImpact();
+        this.collision = true;
+        // Cancel alert after 2s
+        setInterval( () => {
+          this.collision = null;
+        }, 2000)
+        // Insert bounce animation
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+
+  clearAll() {
+    this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+  }
+
+  
   drawEverything(timestamp) {
     this.clearAll();
     this.sea.draw();
     this.obstacles.draw();
     this.ship.draw(timestamp);
     this.drawTopBar();
+    if (this.collision && !this.murderer) {
+      this.drawCollisionAlert();
+    }
     if (this.murderer) {
       this.drawMurderer();
     }
@@ -49,9 +131,8 @@ class Game {
       }, 2500);
     }
   }
-
+    
   
-  // To use custom fonts I'll have to use DOM manipulation...
   drawTopBar() {
     this.ctx.fillStyle = 'white';
     this.ctx.fillRect(0, 0, 640, 32);
@@ -67,54 +148,6 @@ class Game {
   }
 
 
-  clearAll() {
-    this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
-  }
-
-
-  updateEverything() {
-    this.sea.update();
-    this.obstacles.selectObstacles();
-    this.obstacles.updateObstacles();
-    this.updateHealth();
-    this.difficulty();
-  }
-
-
-  updateHealth() {
-    for (let obstacle of this.obstacles.obstaclesArr) {
-      if (this.isCollison(this.ship.position, obstacle)) {
-        switch (obstacle.type) {
-          case 'iceberg':
-            this.health -= 5;
-            break;
-          case 'bergy':
-            this.health -= 3;
-            break;
-          case 'growler':
-            this.health -= 1;
-            break;
-          case 'orca':
-            // this.health = 0;
-            //insert display
-            this.murderer = true;
-            // settimeout for alert
-            this.obstacles.velocity = 0;
-            this.sea.velocity = 0;
-            this.animationRef = null;
-            this.pause = true;
-            setTimeout( () => {
-              this.alert = null;
-              this.gameOver();
-            }, 3000);
-            break;
-        }
-      }
-      console.log(this.health);
-    }
-  }
-
-
   drawHealth() {
     let startX = 440;
     for (let i = this.health; i > 0; i--) {
@@ -123,28 +156,16 @@ class Game {
       startX += 20;
     }
   }
+
+  drawCollisionAlert() {
+    const ctx = this.ctx;
+    ctx.fillStyle = 'red';
+    ctx.fillRect(260, 60, 120, 40);
+    ctx.font = 'blod 32px "Courier New"';
+    ctx.fillStyle = 'white';
+    ctx.fillText('COLLISON!', 265, 86);
+  }
   
-
-  difficulty() {
-    if (this.score > 0 && this.score % 10 === 0) {
-      this.level += 1;
-      this.score += 1;
-      this.obstacles.velocity *= 1.005;
-      //set alert & cancel
-      this.levelupAlert = true;
-    }
-  }
-
-
-  drawMurderer() {
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(180, 100, 280, 100);
-    this.ctx.fillStyle = 'white'
-    this.ctx.font = 'bold 48px "Courier New"';
-    this.ctx.fillText('MURDERER!', 200, 150);
-  }
-
-
   drawLevelUp() {
     const ctx = this.ctx;
     ctx.fillStyle = 'blue';
@@ -153,47 +174,32 @@ class Game {
     ctx.fillStyle = 'white';
     ctx.fillText('LEVEL UP', 272, 86);
   }
-  
-  
-  animation(timestamp) {
-    // //   console.log(timestamp)
-    // this.secondsPassed = (timestamp - this.oldTimeStamp) / 1000;
-    // this.oldTimestamp = timestamp;
 
+
+  drawMurderer() {
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillRect(180, 100, 280, 100);
+    this.ctx.fillStyle = 'white'
+    this.ctx.font = 'bold 48px "Courier New"';
+    this.ctx.fillText('MURDERER!', 200, 164);
+  }
+
+
+  animation(timestamp) {
     if (!this.pause) {
-      this.updateEverything(timestamp);
-      this.drawEverything(timestamp);
-      this.animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
+      this.updateEverything();
+      this.drawEverything();
+      window.requestAnimationFrame(timestamp => this.animation(timestamp));
       if (this.health <= 0) {
-        window.cancelAnimationFrame(this.animationRef);
         this.gameOver();
       }
     }
   }
-  
-  
-  // compares the properties of two objects and returns true or false
-  isCollison(object1, object2) {
-    // object1 -= 5;
-    // object2 -= 5;
-    if (object2.collision === true) {
-      return false;
-    } else {
-      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
-        object2.collision = true;
-        this.sound.playImpact();
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-  
+
   
   gameOver() {
-    this.obstacles.velocity = 0;
-    this.animationRef = null;
     this.pause = true;
+    this.obstacles.velocity = 0;
     this.sound.playGameOver();
     this.sound.stopSoundsAll();
     //in main.js
@@ -208,6 +214,7 @@ class Game {
   reset () {
     this.level = 1;
     this.score = 0;
+    this.sea.velocity = 1;
     this.ship.reset();
     this.obstacles.reset();
   }
