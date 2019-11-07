@@ -10,6 +10,7 @@ class Game {
     this.sea = new Sea(this);
     this.ship = new Ship(this);
     this.obstacles = new Obstacles(this);
+    this.decorations = new Decorations(this);
     this.level = 1;
     this.score = 1;
     this.health = 10;
@@ -19,6 +20,8 @@ class Game {
     this.collision = null;
     this.levelupAlert = null;
     this.murderer = null;
+
+    this.penguin = null;
 
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
@@ -32,6 +35,7 @@ class Game {
     this.sound = new Sound();
     this.sound.playWind();
     this.sound.playSoundsAll();
+    this.decorations.setDecorations();
 
     // Change level evert 30s
     setInterval( () => {
@@ -53,6 +57,9 @@ class Game {
     this.updateHealth();
     this.sea.update();
     this.ship.update();
+    if (this.penguin) {
+      this.decorations.updatePenguin();
+    }
   }
   
   
@@ -91,7 +98,7 @@ class Game {
     if (object2.collision === true) { // If already collided ignore
       return false;
     } else {
-      if (object1.x - this.ship.shipImg.width/2 < object2.x + object2.width && object1.x - this.ship.shipImg.width/2 + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
+      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
         object2.collision = true;
         this.sound.playImpact();
         this.collision = true;
@@ -119,6 +126,9 @@ class Game {
     this.obstacles.draw();
     this.ship.draw(timestamp);
     this.drawTopBar();
+    if (this.penguin) {
+      this.decorations.drawPenguin();
+    }
     if (this.collision && !this.murderer) {
       this.drawCollisionAlert();
     }

@@ -35,6 +35,7 @@ class Obstacles {
     const obstacleImg = selectedObsType + 'Img';
     const randomX = Math.floor(Math.random() * this.game.WIDTH) - this[obstacleImg].width/2;
     const randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this[obstacleImg].height);
+    //needed hackish ternary operator solution for first load -- image properties not loading first enough for 1st target
     const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width = 0 ? 60 : 60}, "height" : ${this[obstacleImg].height = 0 ? 60 : 60}, "type" : "${selectedObsType}", "collision" : null }`;
     this.obstaclesArr.push(JSON.parse(newObs));
   }
@@ -49,23 +50,8 @@ class Obstacles {
       this.obstaclesArr.shift();
     }
   }
-  
-    // if (this.obstaclesArr[0].y > this.game.HEIGHT && this.obstaclesArr.length > 1) {
-    //   switch (this.obstaclesArr[0].type) {
-    //     case 'iceberg':
-    //       this.game.score += 1;
-    //       break;
-    //     case 'bergy':
-    //       this.game.score += 1;
-    //       break;
-    //     case 'growler':
-    //       this.game.score += 1;
-    //       break;
-    //   }
-      // this.obstaclesArr.shift();
-    // }
-  // }
 
+  
   draw() {
     const ctx = this.game.ctx;
     for (let obstacle of this.obstaclesArr) {
@@ -85,6 +71,7 @@ class Obstacles {
       }
     }
   }
+
 
   reset() {
     this.obstaclesArr = [];
