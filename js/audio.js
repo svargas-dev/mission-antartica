@@ -60,7 +60,7 @@ class Sound {
   }
 
 
-  stopSoundsAll () {
+  stopSoundsAll() {
     clearInterval(this.windTimerID);
     clearInterval(this.iceCollapseTimerID); 
   }

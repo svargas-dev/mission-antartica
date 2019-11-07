@@ -4,15 +4,17 @@ class Game {
     this.ctx = this.canvas.getContext('2d');
     this.HEIGHT = this.canvas.height;
     this.WIDTH = this.canvas.width;
-
+    
+    this.controls = new Controls(this);
+    this.controls.setControls();
     this.sea = new Sea(this);
     this.ship = new Ship(this);
-    this.controls = new Controls(this);
     this.obstacles = new Obstacles(this);
     this.level = 1;
     this.score = 1;
     this.health = 10;
-
+    
+    this.pause = null;
     this.animationRef = null;
     
     this.levelupAlert = null;
@@ -20,11 +22,10 @@ class Game {
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
   }
-
-
+  
+  
   startGame() {
     // call everything
-    this.controls.setControls();
     this.animation();
     this.sound = new Sound();
     this.sound.playWind();
@@ -100,6 +101,8 @@ class Game {
             // settimeout for alert
             this.obstacles.velocity = 0;
             this.sea.velocity = 0;
+            this.animationRef = null;
+            this.pause = true;
             setTimeout( () => {
               this.alert = null;
               this.gameOver();
@@ -157,19 +160,18 @@ class Game {
     // this.secondsPassed = (timestamp - this.oldTimeStamp) / 1000;
     // this.oldTimestamp = timestamp;
 
-    this.updateEverything(timestamp);
-    this.drawEverything(timestamp);
-    
-    this.animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
-    if (this.health <= 0) {
-      window.cancelAnimationFrame(this.animationRef);
-      this.sound.stopSoundsAll();
-      this.gameOver();
-      this.obstacles.velocity = 0;
+    if (!this.pause) {
+      this.updateEverything(timestamp);
+      this.drawEverything(timestamp);
+      this.animationRef = window.requestAnimationFrame(timestamp => this.animation(timestamp));
+      if (this.health <= 0) {
+        window.cancelAnimationFrame(this.animationRef);
+        this.gameOver();
+      }
     }
   }
   
-
+  
   // compares the properties of two objects and returns true or false
   isCollison(object1, object2) {
     // object1 -= 5;
@@ -186,20 +188,24 @@ class Game {
       }
     }
   }
-
-
+  
+  
   gameOver() {
+    this.obstacles.velocity = 0;
+    this.animationRef = null;
+    this.pause = true;
     this.sound.playGameOver();
+    this.sound.stopSoundsAll();
     //in main.js
     resetButton();
     // I get a race condition if I declare the image here so it's in the constructor
     this.ctx.drawImage(this.gameOverImg, 0, 0);
+    this.ctx.font = 'bold 20px "Courier New"';
     this.ctx.fillText('Final Score:  ' + this.score, 220, 200);
   }
-
-
+  
+  
   reset () {
-    this.animationRef = null;
     this.level = 1;
     this.score = 0;
     this.ship.reset();
