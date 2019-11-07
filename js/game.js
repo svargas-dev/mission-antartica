@@ -76,6 +76,7 @@ class Game {
   updateHealth() {
     for (let obstacle of this.obstacles.obstaclesArr) {
       if (this.isCollison(this.ship.position, obstacle)) {
+        this.ship.bounce(); // I know it's a weird place to put it.. 
         switch (obstacle.type) {
           case 'iceberg':
             this.health -= 5;

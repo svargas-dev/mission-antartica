@@ -2,6 +2,7 @@ class Controls {
   constructor(game) {
     this.game = game;
     this.xMove = 2;
+    this.yMove = 1;
   }
 
   setControls() {
@@ -15,6 +16,14 @@ class Controls {
         case 39:
           this.game.ship.vx = this.xMove;
           break;
+        // //UP
+        // case 38:
+        //   this.game.ship.vy = -this.yMove;
+        //   break;
+        // //DOWN
+        // case 40:
+        //   this.game.ship.vy = this.yMove;
+        //   break;
       }
     });
 
@@ -27,6 +36,14 @@ class Controls {
         case 39:
           this.game.ship.vx = 0;
           break;
+        // //UP
+        // case 38:
+        //   this.game.ship.vy = 0;
+        // break;
+        //   //DOWN
+        // case 40:
+        //   this.game.ship.vy = 0;
+        // break;
         }
     })
   }
