@@ -14,6 +14,7 @@ class Game {
     this.level = 1;
     this.score = 1;
     this.health = 10;
+    this.levelInterval = 30000;
     
     this.pause = null;
     
@@ -22,6 +23,7 @@ class Game {
     this.murderer = null;
 
     this.penguin = null;
+    this.albatross = null;
 
     this.gameOverImg = new Image();
     this.gameOverImg.src = 'images/game-over.png';
@@ -47,7 +49,8 @@ class Game {
       setTimeout( () => {
         this.levelupAlert = null;
       }, 2000);
-    }, 30000);
+      this.levelInterval -= 1000;
+    }, this.levelInterval);
   }
 
   
@@ -59,6 +62,9 @@ class Game {
     this.ship.update();
     if (this.penguin) {
       this.decorations.updatePenguin();
+    }
+    if (this.albatross) {
+      this.decorations.updateAlbatross();
     }
   }
   
@@ -128,6 +134,9 @@ class Game {
     this.drawTopBar();
     if (this.penguin) {
       this.decorations.drawPenguin();
+    }
+    if (this.albatross) {
+      this.decorations.drawAlbatross();
     }
     if (this.collision && !this.murderer) {
       this.drawCollisionAlert();
@@ -207,6 +216,7 @@ class Game {
   
   gameOver() {
     this.pause = true;
+    this.decorations.stopDecorations();
     this.obstacles.velocity = 0;
     this.sound.playGameOver();
     this.sound.stopSoundsAll();
@@ -214,6 +224,7 @@ class Game {
     resetButton();
     // I get a race condition if I declare the image here so it's in the constructor
     this.ctx.drawImage(this.gameOverImg, 0, 0);
+    this.ctx.fillStyle = 'black';
     this.ctx.font = 'bold 20px "Courier New"';
     this.ctx.fillText('Final Score:  ' + this.score, 220, 200);
   }

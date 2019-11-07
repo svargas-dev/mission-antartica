@@ -28,6 +28,15 @@ class Sound {
     iceberg.play();
   }
 
+  playAlbatross() {
+    const albatross = new Audio('audio/albatross.ogg')
+    albatross.play();
+  }
+
+  playPenguin() {
+    const penguin = new Audio('audio/penguin.mp3');
+    penguin.play();
+  }
 
   playGameOver() {
     const iceberg = new Audio('audio/end-game.ogg');
