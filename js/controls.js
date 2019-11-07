@@ -2,7 +2,7 @@ class Controls {
   constructor(game) {
     this.game = game;
     this.horMove = 4;
-    this.courseMove = 12;
+    // this.courseMove = 12;
   }
 
   // to do: prevent default

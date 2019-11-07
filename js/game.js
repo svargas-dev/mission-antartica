@@ -57,7 +57,10 @@ class Game {
   
   updateHealth() {
     for (let obstacle of this.obstacles.obstaclesArr) {
+      console.log(this.obstacles.obstaclesArr[0])
+      debugger;
       if (this.isCollison(this.ship.position, obstacle)) {
+        console.log("1st")
         switch (obstacle.type) {
           case 'iceberg':
             this.health -= 5;
