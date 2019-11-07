@@ -11,7 +11,7 @@ class Obstacles {
     //Iceberg
     this.icebergImg = new Image();
     this.icebergImg.src = 'images/iceberg.png';
-    // Animals
+    // ANIMALS
     this.orcaImg = new Image();
     this.orcaImg.src = 'images/orca.png';
     // will contain objects with x, y, width, height & type
@@ -31,7 +31,6 @@ class Obstacles {
 
   generateObstacles(selectedObsType) {
     const obstacleImg = selectedObsType + 'Img';
-    // const obsType = selectedObsType;
     const randomX = Math.floor(Math.random() * this.game.WIDTH) - this[obstacleImg].width/2;
     const randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this[obstacleImg].height);
     const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width}, "height" : ${this[obstacleImg].height}, "type" : "${selectedObsType}", "collision" : "false" }`;

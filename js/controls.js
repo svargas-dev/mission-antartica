@@ -2,6 +2,7 @@ class Controls {
   constructor(game) {
     this.game = game;
     this.horMove = 4;
+    this.courseMove = 12;
   }
 
   // to do: prevent default
@@ -14,17 +15,19 @@ class Controls {
           if (this.game.ship.position.x <= this.game.WIDTH && 
               this.game.ship.position.x > this.horMove) {
             this.game.ship.position.x -= this.horMove;
+            // this.game.ship.previousCourse = Number(this.game.ship.currentCourse);
+            // this.game.ship.targetCourse -= this.courseMove;
           } else {
             this.game.sound.playClang();
           }
-          // this.game.ship.course -= 2;
           break;
-        //RIGHT
-        case 39:
-          if (this.game.ship.position.x < (this.game.WIDTH - this.horMove) && 
-          this.game.ship.position.x >= 0) {
-            this.game.ship.position.x += this.horMove;
-            // this.game.ship.course += 2;
+          //RIGHT
+          case 39:
+            if (this.game.ship.position.x < (this.game.WIDTH - this.horMove) && 
+            this.game.ship.position.x >= 0) {
+              this.game.ship.position.x += this.horMove;
+              // this.game.ship.previousCourse = Number(this.game.ship.currentCourse);
+              // this.game.ship.targetCourse += this.courseMove;
           } else {
             this.game.sound.playClang();
           }
