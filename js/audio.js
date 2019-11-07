@@ -21,17 +21,11 @@ class Sound {
     const growler = new Audio('audio/thud.mp3');
     growler.play();
   }
-
-  // let selectRanSound = Math.floor(Math.random()*3) + 1;
-  // const iceberg = new Audio(`audio/iceberg${selectRanSound}.ogg`)
   
 
-  playIceCollapse(interval) {
-    setTimeout( () => {
-      const iceberg = new Audio('audio/ice-collapse.ogg');
-      iceberg.play();
-    }, 22000);
-    console.log('Ice collapse!')
+  playIceCollapse() {
+    const iceberg = new Audio('audio/ice-collapse.ogg');
+    iceberg.play();
   }
 
 
@@ -49,14 +43,6 @@ class Sound {
     this.iceCollapseTimerID = setInterval(() => {
       this.playIceCollapse();
     }, interval);
-
-    // random repeat loop between 90s and 120s
-    // setInterval( () => {
-    //   this.icebergInterval = (Math.random() * 90000) + 30000;
-    // }, 59000);
-    // setInterval( () => {
-    //   this.playIceberg();
-    // }, this.icebergInterval);
   }
 
 

@@ -31,27 +31,27 @@ class Game {
     //Backround sounds
     this.sound = new Sound();
     this.sound.playWind();
-    this.sound.playSoundsAll();    
-  }
+    this.sound.playSoundsAll();
 
-  
-  updateEverything() {
-    this.obstacles.selectObstacles();
-    this.updateHealth();
-    this.obstacles.updateObstacles();
-    this.updateDifficulty();
-    this.sea.update();
-  }
-
-  //Maybe change to setInterval..
-  updateDifficulty() {
-    if (this.score > 0 && this.score % 10 === 0) {
+    // Change level evert 30s
+    setInterval( () => {
       this.level += 1;
       this.score += 1;
       this.obstacles.velocity *= 1.005;
       //set alert & cancel
       this.levelupAlert = true;
-    }
+      setTimeout( () => {
+        this.levelupAlert = null;
+      }, 2000);
+    }, 30000);
+  }
+
+  
+  updateEverything() {
+    this.obstacles.selectObstacles();
+    this.obstacles.updateObstacles();
+    this.updateHealth();
+    this.sea.update();
   }
   
   
@@ -126,9 +126,6 @@ class Game {
     }
     if (this.levelupAlert) {
       this.drawLevelUp();
-      setTimeout( () => {
-        this.levelupAlert = null;
-      }, 2500);
     }
   }
     
