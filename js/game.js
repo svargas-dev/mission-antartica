@@ -12,6 +12,7 @@ class Game {
     this.obstacles = new Obstacles(this);
     this.decorations = new Decorations(this);
     this.level = 1;
+    this.dificulty = 1;
     this.score = 1;
     this.health = 10;
     this.levelInterval = 30000;
@@ -43,7 +44,10 @@ class Game {
     setInterval( () => {
       this.level += 1;
       this.score += 1;
-      this.obstacles.velocity *= 1.005;
+      this.obstacles.velocity *= 1.01;
+      if (this.dificulty < 4) {
+        this.dificulty += 1;
+      }
       //set alert & cancel
       this.levelupAlert = true;
       setTimeout( () => {
@@ -174,6 +178,7 @@ class Game {
     }
   }
 
+
   drawCollisionAlert() {
     const ctx = this.ctx;
     ctx.fillStyle = 'red';
@@ -183,6 +188,7 @@ class Game {
     ctx.fillText('COLLISON!', 265, 86);
   }
   
+
   drawLevelUp() {
     const ctx = this.ctx;
     ctx.fillStyle = 'blue';

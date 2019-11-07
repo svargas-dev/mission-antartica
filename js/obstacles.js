@@ -16,7 +16,7 @@ class Obstacles {
     this.orcaImg.src = 'images/orca.png';
     // will contain objects with x, y, width, height & type
     this.obstaclesArr = [];
-    this.obstacleTypes = [ "iceberg", "bergy", "growler", "orca" ];
+    this.obstacleTypes = [ "growler", "bergy", "iceberg", "orca" ];
 
     this.velocity = 2;
   }
@@ -24,7 +24,7 @@ class Obstacles {
 
   selectObstacles() {
     if (this.obstaclesArr.length <= this.game.level) {
-      const selectObstacleIndex = Math.floor(Math.random() * this.obstacleTypes.length);
+      const selectObstacleIndex = Math.floor(Math.random() * this.game.dificulty);
       const selectedObsType = this.obstacleTypes[selectObstacleIndex];
       this.generateObstacles(selectedObsType);
     }
