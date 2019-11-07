@@ -15,7 +15,6 @@ class Game {
     this.dificulty = 1;
     this.score = 1;
     this.health = 10;
-    this.levelInterval = 30000;
     
     this.pause = null;
     
@@ -47,6 +46,7 @@ class Game {
       this.level += 1;
       this.score += 1;
       this.obstacles.velocity *= 1.01;
+      this.sea.velocity *= 1.009;
       if (this.dificulty < 4) {
         this.dificulty += 1;
       }
@@ -55,8 +55,7 @@ class Game {
       setTimeout( () => {
         this.levelupAlert = null;
       }, 2000);
-      this.levelInterval -= 1000;
-    }, this.levelInterval);
+    }, 21000);
   }
 
   
@@ -176,11 +175,11 @@ class Game {
 
 
   drawHealth() {
-    let startX = 440;
+    let startX = 490;
     for (let i = this.health; i > 0; i--) {
       this.ctx.fillStyle = 'green';
-      this.ctx.fillRect(startX, 5, 20, 20);
-      startX += 20;
+      this.ctx.fillRect(startX, 5, 15, 20);
+      startX += 15;
     }
   }
 

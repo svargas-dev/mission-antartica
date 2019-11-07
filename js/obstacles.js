@@ -23,7 +23,7 @@ class Obstacles {
 
 
   selectObstacles() {
-    if (this.obstaclesArr.length <= this.game.level) {
+    if (this.obstaclesArr.length <= this.game.level+2) {
       const selectObstacleIndex = Math.floor(Math.random() * this.game.dificulty);
       const selectedObsType = this.obstacleTypes[selectObstacleIndex];
       this.generateObstacles(selectedObsType);
