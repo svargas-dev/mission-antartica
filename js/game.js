@@ -47,7 +47,7 @@ class Game {
       this.score += 1;
       this.obstacles.velocity *= 1.01;
       this.sea.velocity *= 1.009;
-      if (this.dificulty < 4) {
+      if (this.dificulty < 6) {
         this.dificulty += 1;
       }
       //set alert & cancel
@@ -79,11 +79,14 @@ class Game {
       if (this.isCollison(this.ship.position, obstacle)) {
         this.ship.bounce(); // I know it's a weird place to put it.. 
         switch (obstacle.type) {
-          case 'iceberg':
+          case 'penguinsIce' || 'sealIce':
             this.health -= 5;
             break;
+          case 'iceberg':
+            this.health -= 4;
+            break;
           case 'bergy':
-            this.health -= 3;
+            this.health -= 2;
             break;
           case 'growler':
             this.health -= 1;

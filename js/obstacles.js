@@ -12,11 +12,15 @@ class Obstacles {
     this.icebergImg = new Image();
     this.icebergImg.src = 'images/iceberg.png';
     // ANIMALS
+    this.penguinsIceImg = new Image();
+    this.penguinsIceImg.src = 'images/penguinsIce.png';
+    this.sealIceImg = new Image();
+    this.sealIceImg.src = 'images/sealIce.png';
     this.orcaImg = new Image();
     this.orcaImg.src = 'images/orca.png';
     // will contain objects with x, y, width, height & type
     this.obstaclesArr = [];
-    this.obstacleTypes = [ "growler", "bergy", "iceberg", "orca" ];
+    this.obstacleTypes = [ "growler", "bergy", "iceberg", "penguinsIce", "sealIce", "orca" ];
 
     this.velocity = 2;
   }
@@ -34,7 +38,7 @@ class Obstacles {
   generateObstacles(selectedObsType) {
     const obstacleImg = selectedObsType + 'Img';
     const randomX = Math.floor(Math.random() * this.game.WIDTH) - this[obstacleImg].width/2;
-    const randomY = Math.floor(Math.random() * -(this.game.HEIGHT/this.game.level) - this[obstacleImg].height);
+    const randomY = Math.floor(Math.random() * -Math.random()*this.game.HEIGHT - this[obstacleImg].height);
     //needed hackish ternary operator solution for first load -- image properties not loading first enough for 1st target
     const newObs = `{ "x" : ${randomX}, "y" : ${randomY}, "width" : ${this[obstacleImg].width = 0 ? 38 : 38}, "height" : ${this[obstacleImg].height = 0 ? 41 : 41}, "type" : "${selectedObsType}", "collision" : null }`;
     this.obstaclesArr.push(JSON.parse(newObs));
@@ -56,6 +60,10 @@ class Obstacles {
     const ctx = this.game.ctx;
     for (let obstacle of this.obstaclesArr) {
       switch (obstacle.type) {
+        case 'sealIce':
+          ctx.drawImage(this.sealIceImg, obstacle.x, obstacle.y);
+        case 'penguinsIce':
+          ctx.drawImage(this.penguinsIceImg, obstacle.x, obstacle.y);
         case 'iceberg':
           ctx.drawImage(this.icebergImg, obstacle.x, obstacle.y);
           break;

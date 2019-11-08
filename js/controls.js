@@ -30,11 +30,11 @@ class Controls {
     window.addEventListener('keyup', event => {
       switch (event.keyCode) {
         case 37:
-          this.game.ship.vx = 0;
+          this.game.ship.vx = -1/3;
           break;
         //RIGHT
         case 39:
-          this.game.ship.vx = 0;
+          this.game.ship.vx = 1/3;
           break;
         // //UP
         // case 38:
