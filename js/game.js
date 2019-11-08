@@ -17,13 +17,15 @@ class Game {
     this.health = 10;
     
     this.pause = null;
-    
     this.collision = null;
     this.levelupAlert = null;
     this.murderer = null;
-
+    
     this.penguin = null;
     this.albatross = null;
+    
+    this.gameOverAni = new GameOver(this);
+    this.gameOverAnimation = null;
 
     this.flag = null;
 
@@ -70,6 +72,9 @@ class Game {
     }
     if (this.albatross) {
       this.decorations.updateAlbatross();
+    }
+    if (this.gameOverAnimation) {
+      this.gameOverAni.update();
     }
   }
   
@@ -161,6 +166,9 @@ class Game {
     if (this.flag) {
       this.drawHello();
     }
+    if (this.gameOverAnimation) {
+      this.gameOverAni.draw();
+    }
   }
     
   
@@ -224,7 +232,13 @@ class Game {
       this.drawEverything();
       window.requestAnimationFrame(timestamp => this.animation(timestamp));
       if (this.health <= 0) {
-        this.gameOver();
+        this.gameOverAnimation = true;
+        this.sea.velocity = 0;
+        this.obstacles.velocity = 0;
+        setTimeout( () => {
+          this.gameOver();
+          this.gameOverAnimation = null;
+        }, 3000)
       }
     }
   }
@@ -254,11 +268,13 @@ class Game {
     this.obstacles.reset();
   }
 
+
   drawHello() {
     const hello = new Image();
     hello.src = 'images/hello.png';
     this.ctx.drawImage(hello, 170, 90);
   }
+
 
   easterEgg($canvas, event) {
     const rect = $canvas.getBoundingClientRect();
