@@ -106,11 +106,13 @@ class Game {
 
 
   // compares the properties of two objects and returns true or false
+  // object1 is ship, object2 is obstacle
   isCollison(object1, object2) {
     if (object2.collision === true) { // If already collided ignore
       return false;
     } else {
-      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
+      // if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) {
+      if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x && 330 < object2.y + object2.height && 330 + 135 > object2.y) {
         object2.collision = true;
         this.sound.playImpact();
         this.collision = true;

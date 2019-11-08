@@ -4,10 +4,9 @@ class Ship {
     this.shipImg = new Image();
     this.shipImg.src = 'images/ship.png';
     // will center if ship image is changed...
-    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": ${this.game.HEIGHT - this.shipImg.height - 30}, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
+    // this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": ${this.game.HEIGHT - this.shipImg.height - 30}, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
     // except it doesn't... so here it is manually -- 
-    // draw isn't reading this.position.y... so I only have the x axis
-    // this.position = {"x" : 320, "y" : 200, "width" : 32, "height": 135};
+    this.position = {"x" : 320, "y" : 330, "width" : 32, "height": 135};
     this.vx = 0;
     // this.vy = 0;
   }
@@ -38,7 +37,7 @@ class Ship {
 
 
   reset() {
-    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": 340, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
+    this.position = JSON.parse(`{"x": ${this.game.WIDTH/2}, "y": 330, "width": ${this.shipImg.width}, "height": ${this.shipImg.height}}`);
     this.course = 0;
     this.velocity = 0;
   }
