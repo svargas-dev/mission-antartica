@@ -1,5 +1,5 @@
 # Mission: Antartica
-<img src="https://github.com/svargas-dev/mission-antartica/blob/master/images/readme-project1.png?raw=true" alt="IronHack Project 1: By Sam Vargas">
+<a href="https://mission-antarctica.netlify.com/"><img src="https://github.com/svargas-dev/mission-antartica/blob/master/images/readme-project1.png?raw=true" alt="IronHack Project 1: By Sam Vargas"></a>
 
 The game was inspired by my pre-bootcamp life: an officer on a merchant research ship in the Antarctic.
 
